@@ -67,6 +67,7 @@ namespace WebAddressbookTests
             contact.Title = "Doc";
             contact.WorkTel = "567483";
             CreateContact(contact);
+            ClickSubmitButton();
             Logout();
         }
 
@@ -113,6 +114,11 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("phone2")).SendKeys(contact.HomeTel2);
             driver.FindElement(By.Name("notes")).Clear();
             driver.FindElement(By.Name("notes")).SendKeys(contact.Notes);
+
+        }
+
+        private void ClickSubmitButton()
+        {
             driver.FindElement(By.Name("submit")).Click();
         }
 

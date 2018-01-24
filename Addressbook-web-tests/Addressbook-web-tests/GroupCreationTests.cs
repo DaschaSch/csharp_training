@@ -52,6 +52,7 @@ namespace WebAddressbookTests
             newgroup.GroupHeader = "ddd";
             newgroup.GroupFooter = "ccc";
             CreateGroup(newgroup);
+            ClickSubmitButton();
             Logout();
         }
 
@@ -69,6 +70,10 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("group_header")).SendKeys(newgroup.GroupHeader);
             driver.FindElement(By.Name("group_footer")).Clear();
             driver.FindElement(By.Name("group_footer")).SendKeys(newgroup.GroupFooter);
+        }
+
+        private void ClickSubmitButton()
+        {
             driver.FindElement(By.Name("submit")).Click();
         }
 
