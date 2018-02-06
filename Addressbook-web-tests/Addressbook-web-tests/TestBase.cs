@@ -57,7 +57,6 @@ namespace WebAddressbookTests
 
         protected void Logout()
         {
-            driver.FindElement(By.LinkText("group page")).Click();
             driver.FindElement(By.LinkText("Logout")).Click();
         }
 
