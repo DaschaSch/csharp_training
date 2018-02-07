@@ -10,8 +10,8 @@ namespace WebAddressbookTests
     public class ContactHelper : HelperBase
     {
 
-        public ContactHelper(IWebDriver driver)
-            : base(driver)
+        public ContactHelper(ApplicationManager manager)
+            : base(manager)
         { }
         public void CreateContact(ContactData contact)
         {
@@ -56,6 +56,14 @@ namespace WebAddressbookTests
         public void AddNewContactPage()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+        }
+        public void EditContact(int index)
+        {
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])["+index+"]")).Click();
+        }
+        public void ClickUpdateButton()
+        {
+            driver.FindElement(By.Name("update")).Click();
         }
     }
 }

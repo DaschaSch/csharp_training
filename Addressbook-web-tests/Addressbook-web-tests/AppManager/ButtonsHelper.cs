@@ -9,8 +9,8 @@ namespace WebAddressbookTests
 {
     public class ButtonsHelper : HelperBase
     {
-        public ButtonsHelper(IWebDriver driver)
-            : base(driver)
+        public ButtonsHelper(ApplicationManager manager)
+            : base(manager)
         { }
         public void ClickSubmitButton()
         {
@@ -20,10 +20,7 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.Name("new")).Click();
         }
-        public void ClickEditButton()
-        {
-            driver.FindElement(By.Name("update")).Click();
-        }
+
         public void ClickDeleteButton()
         {
             driver.FindElement(By.Name("delete")).Click();
