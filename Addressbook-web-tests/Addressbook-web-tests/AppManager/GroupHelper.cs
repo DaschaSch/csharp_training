@@ -15,7 +15,6 @@ namespace WebAddressbookTests
         { }
         public void CreateGroup(GroupData newgroup)
         {
-            driver.FindElement(By.Name("new")).Click();
             driver.FindElement(By.Name("group_name")).Clear();
             driver.FindElement(By.Name("group_name")).SendKeys(newgroup.GroupName);
             driver.FindElement(By.Name("group_header")).Clear();
@@ -23,16 +22,6 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("group_footer")).Clear();
             driver.FindElement(By.Name("group_footer")).SendKeys(newgroup.GroupFooter);
         }
-        public void ReturnToGroupsPage()
-        {
-            driver.FindElement(By.LinkText("group page")).Click();
-        }
-
-        public void RemoveGroup()
-        {
-            driver.FindElement(By.Name("delete")).Click();
-        }
-
         public void SelectGroup(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();

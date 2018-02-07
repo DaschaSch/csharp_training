@@ -16,5 +16,17 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.Name("submit")).Click();
         }
+        public void ClickNewButton()
+        {
+            driver.FindElement(By.Name("new")).Click();
+        }
+        public void ClickEditButton()
+        {
+            driver.FindElement(By.Name("update")).Click();
+        }
+        public void ClickDeleteButton()
+        {
+            driver.FindElement(By.Name("delete")).Click();
+        }
     }
 }

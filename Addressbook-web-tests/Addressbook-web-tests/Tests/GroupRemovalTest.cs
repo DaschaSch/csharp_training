@@ -18,8 +18,8 @@ namespace WebAddressbookTests
             app.Auth.Login(new LoginData("admin", "secret"));
             app.Navigator.GoToGroupPage();
             app.Groups.SelectGroup(1);
-            app.Groups.RemoveGroup();
-            app.Groups.ReturnToGroupsPage();
+            app.Buttons.ClickDeleteButton();
+            app.Navigator.GoToGroupPage();
         }
     }
 }
