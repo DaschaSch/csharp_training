@@ -13,7 +13,41 @@ namespace WebAddressbookTests
         public ContactHelper(ApplicationManager manager)
             : base(manager)
         { }
-        public void CreateContact(ContactData contact)
+
+        public ContactHelper Create(ContactData contact)
+        {
+            AddNewContactPage();
+            CreateContact(contact);
+            manager.Buttons.ClickSubmitButton();
+            manager.Auth.Logout();
+            return this;
+        }
+
+        internal ContactHelper Remove(int v)
+        {
+            manager.Navigator.GoToHomePage();
+            Delete(v);
+            manager.Auth.Logout();
+            return this;
+        }
+
+        private void Delete(int v)
+        {
+            driver.FindElement(By.XPath(".//*[@id='" + v + "']")).Click();
+            driver.FindElement(By.XPath(".//*[@id='content']/form[2]/div[2]/input")).Click();
+            driver.SwitchTo().Alert().Accept();
+        }
+
+        internal ContactHelper Modify(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            EditContact(3);
+            manager.Contacts.ClickUpdateButton();
+            manager.Auth.Logout();
+            return this;
+        }
+
+        public ContactHelper CreateContact(ContactData contact)
         {
             driver.FindElement(By.Name("firstname")).Clear();
             driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
@@ -51,19 +85,23 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("phone2")).SendKeys(contact.HomeTel2);
             driver.FindElement(By.Name("notes")).Clear();
             driver.FindElement(By.Name("notes")).SendKeys(contact.Notes);
-
+            return this;
         }
-        public void AddNewContactPage()
+
+        public ContactHelper AddNewContactPage()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+            return this;
         }
-        public void EditContact(int index)
+        public ContactHelper EditContact(int index)
         {
             driver.FindElement(By.XPath("(//img[@alt='Edit'])["+index+"]")).Click();
+            return this;
         }
-        public void ClickUpdateButton()
+        public ContactHelper ClickUpdateButton()
         {
             driver.FindElement(By.Name("update")).Click();
+            return this;
         }
     }
 }

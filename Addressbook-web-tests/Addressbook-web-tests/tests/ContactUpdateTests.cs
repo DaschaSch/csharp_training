@@ -14,8 +14,6 @@ namespace WebAddressbookTests
         [Test]
         public void ContactUpdateTest()
         {
-            app.Navigator.GoToHomePage();
-            app.Contacts.EditContact(3);
             ContactData contact = new ContactData("Denis");
             contact.Address1 = "dfghjk1";
             contact.Address2 = "gs1";
@@ -34,8 +32,8 @@ namespace WebAddressbookTests
             contact.Notes = "lalala1";
             contact.Title = "Doc1";
             contact.WorkTel = "5674831";
-            app.Contacts.ClickUpdateButton();
-            app.Auth.Logout();
+
+            app.Contacts.Modify(contact);
         }
      }
 }
