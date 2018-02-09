@@ -14,18 +14,21 @@ namespace WebAddressbookTests
             : base(manager)
         { }
 
-        public GroupHelper Remove(int v)
+        public GroupHelper Remove(int v, GroupData newgroup)
         {
             manager.Navigator.GoToGroupPage();
+            GroupCreation(newgroup);
             SelectGroup(v);
             manager.Buttons.ClickDeleteButton();
             manager.Navigator.GoToGroupPage();
             return this;
+
         }
 
-        internal GroupHelper Modify(int v, GroupData newgroup)
+        public GroupHelper Modify(int v, GroupData newgroup)
         {
             manager.Navigator.GoToGroupPage();
+            GroupCreation(newgroup);
             SelectGroup(v);
             ClickEditButton();
             ClickUpdateButton();
@@ -36,6 +39,7 @@ namespace WebAddressbookTests
         public GroupHelper Create(GroupData newgroup)
         {
             manager.Navigator.GoToGroupPage();
+
             manager.Buttons.ClickNewButton();
             CreateNewGroup(newgroup);
             manager.Buttons.ClickSubmitButton();
@@ -66,6 +70,21 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
+        }
+        public bool IsGroupPresent()
+        {
+            return IsElementPresent(By.Name("selected[]"));
+        }
+        //Group creation if group is not present
+        private void GroupCreation(GroupData newgroup)
+        {
+            if (IsGroupPresent() == false)
+            {
+                manager.Buttons.ClickNewButton();
+                CreateNewGroup(newgroup);
+                manager.Buttons.ClickSubmitButton();
+                manager.Navigator.GoToGroupPage();
+            }
         }
     }
 }
