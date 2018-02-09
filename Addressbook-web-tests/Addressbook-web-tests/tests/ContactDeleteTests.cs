@@ -14,9 +14,27 @@ namespace WebAddressbookTests
         [Test]
         public void ContactDeleteTest()
         {
-            int v = 8;
-            app.Contacts.Remove(v);
-            v = v + 1; 
+            ContactData contact = new ContactData("Dan");
+            contact.Address1 = "dfghjk";
+            contact.Address2 = "gs";
+            contact.Company = "adf";
+            contact.Email1 = "aaf@fs";
+            contact.Email2 = "gsdsg@fdsgf";
+            contact.Email3 = "sgfs@bfd";
+            contact.Fax = "123456";
+            contact.Homepage = "fghj.com";
+            contact.HomeTel1 = "7344";
+            contact.HomeTel2 = "34567";
+            contact.Lastname = "Schmidt";
+            contact.Middlename = "van";
+            contact.MobileTel = "547474676";
+            contact.Nickname = "dan";
+            contact.Notes = "lalala";
+            contact.Title = "Doc";
+            contact.WorkTel = "567483";
+
+            app.Contacts.Remove(contact);
+
         }
      }
 }

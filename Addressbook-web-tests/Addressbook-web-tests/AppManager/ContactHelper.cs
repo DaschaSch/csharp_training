@@ -23,25 +23,21 @@ namespace WebAddressbookTests
             return this;
         }
 
-        internal ContactHelper Remove(int v)
+        internal ContactHelper Remove(ContactData contact)
         {
             manager.Navigator.GoToHomePage();
-            Delete(v);
+            CreateContactIfNotPresent(contact);
+            Delete();
             manager.Auth.Logout();
             return this;
         }
 
-        private void Delete(int v)
-        {
-            driver.FindElement(By.XPath(".//*[@id='" + v + "']")).Click();
-            driver.FindElement(By.XPath(".//*[@id='content']/form[2]/div[2]/input")).Click();
-            driver.SwitchTo().Alert().Accept();
-        }
 
-        internal ContactHelper Modify(ContactData contact)
+        internal ContactHelper Modify(int v, ContactData contact)
         {
             manager.Navigator.GoToHomePage();
-            EditContact(3);
+            CreateContactIfNotPresent(contact);
+            EditContact(v);
             manager.Contacts.ClickUpdateButton();
             manager.Auth.Logout();
             return this;
@@ -102,6 +98,33 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.Name("update")).Click();
             return this;
+        }
+
+        private void Delete()
+        {
+            driver.FindElement(By.Name("selected[]")).Click();
+            driver.FindElement(By.XPath(".//*[@id='content']/form[2]/div[2]/input")).Click();
+            driver.SwitchTo().Alert().Accept();
+        }
+
+        public bool IsContactPresent()
+        {
+            if (driver.FindElement(By.Id("search_count")).Text != "0")
+            {
+                return true;
+            }
+            return false;
+        }
+        private void CreateContactIfNotPresent(ContactData contact)
+        {
+            if(IsContactPresent() == false)
+            {
+                AddNewContactPage();
+                CreateContact(contact);
+                manager.Buttons.ClickSubmitButton();
+                manager.Navigator.GoToHomePage();
+            }
+
         }
     }
 }

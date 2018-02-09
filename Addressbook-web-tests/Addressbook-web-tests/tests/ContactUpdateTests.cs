@@ -33,7 +33,7 @@ namespace WebAddressbookTests
             contact.Title = "Doc1";
             contact.WorkTel = "5674831";
 
-            app.Contacts.Modify(contact);
+            app.Contacts.Modify(1, contact);
         }
      }
 }
