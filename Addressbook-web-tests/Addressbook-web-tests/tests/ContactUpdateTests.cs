@@ -10,7 +10,7 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactUpdateTests : AuthTestBase
     {
-        
+      
         [Test]
         public void ContactUpdateTest()
         {
@@ -33,6 +33,26 @@ namespace WebAddressbookTests
             contact.Title = "Doc1";
             contact.WorkTel = "5674831";
 
+            ContactData contactCreate = new ContactData("Max");
+            contactCreate.Address1 = "dfghjk1";
+            contactCreate.Address2 = "gs1";
+            contactCreate.Company = "adf1";
+            contactCreate.Email1 = "aaf@fs1";
+            contactCreate.Email2 = "gsdsg@fdsgf1";
+            contactCreate.Email3 = "sgfs@bfd1";
+            contactCreate.Fax = "1234561";
+            contactCreate.Homepage = "fghj.com1";
+            contactCreate.HomeTel1 = "73441";
+            contactCreate.HomeTel2 = "345671";
+            contactCreate.Lastname = "Ernst";
+            contactCreate.Middlename = "van1";
+            contactCreate.MobileTel = "5474746761";
+            contactCreate.Nickname = "dan1";
+            contactCreate.Notes = "lalala1";
+            contactCreate.Title = "Doc1";
+            contactCreate.WorkTel = "5674831";
+
+            app.Contacts.CreateContactIfNotPresent(contactCreate);
             app.Contacts.Modify(1, contact);
         }
      }

@@ -23,10 +23,9 @@ namespace WebAddressbookTests
             return this;
         }
 
-        internal ContactHelper Remove(ContactData contact)
+        internal ContactHelper Remove()
         {
             manager.Navigator.GoToHomePage();
-            CreateContactIfNotPresent(contact);
             Delete();
             manager.Auth.Logout();
             return this;
@@ -36,11 +35,23 @@ namespace WebAddressbookTests
         internal ContactHelper Modify(int v, ContactData contact)
         {
             manager.Navigator.GoToHomePage();
-            CreateContactIfNotPresent(contact);
             EditContact(v);
+            CreateContact(contact);
             manager.Contacts.ClickUpdateButton();
             manager.Auth.Logout();
             return this;
+        }
+        public ContactHelper CreateContactIfNotPresent(ContactData contact)
+        {
+            if (IsContactPresent() == false)
+            {
+                AddNewContactPage();
+                CreateContact(contact);
+                manager.Buttons.ClickSubmitButton();
+                manager.Navigator.GoToHomePage();
+            }
+            return this;
+
         }
 
         public ContactHelper CreateContact(ContactData contact)
@@ -115,16 +126,6 @@ namespace WebAddressbookTests
             }
             return false;
         }
-        private void CreateContactIfNotPresent(ContactData contact)
-        {
-            if(IsContactPresent() == false)
-            {
-                AddNewContactPage();
-                CreateContact(contact);
-                manager.Buttons.ClickSubmitButton();
-                manager.Navigator.GoToHomePage();
-            }
 
-        }
     }
 }

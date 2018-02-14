@@ -14,10 +14,9 @@ namespace WebAddressbookTests
             : base(manager)
         { }
 
-        public GroupHelper Remove(int v, GroupData newgroup)
+        public GroupHelper Remove(int v)
         {
             manager.Navigator.GoToGroupPage();
-            GroupCreation(newgroup);
             SelectGroup(v);
             manager.Buttons.ClickDeleteButton();
             manager.Navigator.GoToGroupPage();
@@ -25,10 +24,9 @@ namespace WebAddressbookTests
 
         }
 
-        public GroupHelper Modify(int v, GroupData newgroup)
+        public GroupHelper Modify(int v)
         {
             manager.Navigator.GoToGroupPage();
-            GroupCreation(newgroup);
             SelectGroup(v);
             ClickEditButton();
             ClickUpdateButton();
@@ -56,6 +54,19 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("group_footer")).SendKeys(newgroup.GroupFooter);
             return this;
         }
+        //Group creation if group is not present
+        public GroupHelper GroupCreationIfNotPresent(GroupData newgroup)
+        {
+            manager.Navigator.GoToGroupPage();
+            if (IsGroupPresent() == false)
+            {
+                manager.Buttons.ClickNewButton();
+                CreateNewGroup(newgroup);
+                manager.Buttons.ClickSubmitButton();
+                manager.Navigator.GoToGroupPage();
+            }
+            return this;
+        }
         public GroupHelper ClickEditButton()
         {
             driver.FindElement(By.Name("edit")).Click();
@@ -75,16 +86,6 @@ namespace WebAddressbookTests
         {
             return IsElementPresent(By.Name("selected[]"));
         }
-        //Group creation if group is not present
-        private void GroupCreation(GroupData newgroup)
-        {
-            if (IsGroupPresent() == false)
-            {
-                manager.Buttons.ClickNewButton();
-                CreateNewGroup(newgroup);
-                manager.Buttons.ClickSubmitButton();
-                manager.Navigator.GoToGroupPage();
-            }
-        }
+
     }
 }
