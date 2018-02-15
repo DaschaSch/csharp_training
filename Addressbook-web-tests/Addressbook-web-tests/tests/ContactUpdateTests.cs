@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -14,6 +15,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactUpdateTest()
         {
+            #region ContactUPD Data
             ContactData contact = new ContactData("Denis");
             contact.Address1 = "dfghjk1";
             contact.Address2 = "gs1";
@@ -32,7 +34,8 @@ namespace WebAddressbookTests
             contact.Notes = "lalala1";
             contact.Title = "Doc1";
             contact.WorkTel = "5674831";
-
+            #endregion
+            #region Contact Create Data
             ContactData contactCreate = new ContactData("Max");
             contactCreate.Address1 = "dfghjk1";
             contactCreate.Address2 = "gs1";
@@ -51,9 +54,21 @@ namespace WebAddressbookTests
             contactCreate.Notes = "lalala1";
             contactCreate.Title = "Doc1";
             contactCreate.WorkTel = "5674831";
+            #endregion
 
             app.Contacts.CreateContactIfNotPresent(contactCreate);
+
+            List<ContactData> oldContact = app.Contacts.GetContactsList();
+
             app.Contacts.Modify(1, contact);
+
+            List<ContactData> newContact = app.Contacts.GetContactsList();
+            oldContact[0].Firstname = contact.Firstname;
+            oldContact[0].Lastname = contact.Lastname;
+            oldContact.Sort();
+            newContact.Sort();
+            Assert.AreEqual(oldContact, newContact);
+
         }
      }
 }

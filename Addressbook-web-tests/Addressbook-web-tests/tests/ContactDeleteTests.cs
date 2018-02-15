@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -14,7 +15,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactDeleteTest()
         {
-            ContactData contact = new ContactData("Dan");
+            ContactData contact = new ContactData("Danis");
             contact.Address1 = "dfghjk";
             contact.Address2 = "gs";
             contact.Company = "adf";
@@ -25,7 +26,7 @@ namespace WebAddressbookTests
             contact.Homepage = "fghj.com";
             contact.HomeTel1 = "7344";
             contact.HomeTel2 = "34567";
-            contact.Lastname = "Schmidt";
+            contact.Lastname = "Schmidts";
             contact.Middlename = "van";
             contact.MobileTel = "547474676";
             contact.Nickname = "dan";
@@ -34,7 +35,14 @@ namespace WebAddressbookTests
             contact.WorkTel = "567483";
 
             app.Contacts.CreateContactIfNotPresent(contact);
+
+            List<ContactData> oldContact = app.Contacts.GetContactsList();
+
             app.Contacts.Remove();
+
+            List<ContactData> newContact = app.Contacts.GetContactsList();
+            oldContact.RemoveAt(0);
+            Assert.AreEqual(oldContact, newContact);
 
         }
      }

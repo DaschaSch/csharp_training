@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
-    public class ContactData
+    public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string firstname;
         private string middlename;
@@ -30,6 +30,11 @@ namespace WebAddressbookTests
         public ContactData(string firstname)
         {
             this.firstname = firstname;
+        }
+        public ContactData(string firstname, string lastname)
+        {
+            this.firstname = firstname;
+            this.lastname = lastname;
         }
         public int CompareTo(ContactData other)
         {
@@ -56,7 +61,7 @@ namespace WebAddressbookTests
         }
         public override string ToString()
         {
-            return "name " + Lastname + Firstname;
+            return "name " + Firstname + Lastname;
         }
 
         public string Firstname

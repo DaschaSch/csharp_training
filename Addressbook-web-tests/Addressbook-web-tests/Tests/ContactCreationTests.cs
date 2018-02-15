@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -33,7 +34,15 @@ namespace WebAddressbookTests
             contact.Title = "Doc";
             contact.WorkTel = "567483";
 
+            List<ContactData> oldContact = app.Contacts.GetContactsList(); 
+
             app.Contacts.Create(contact);
+
+            List<ContactData> newContact = app.Contacts.GetContactsList();
+            oldContact.Add(contact);
+            oldContact.Sort();
+            newContact.Sort();
+            Assert.AreEqual(oldContact, newContact);
         }
      }
 }

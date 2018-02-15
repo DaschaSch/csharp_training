@@ -19,7 +19,7 @@ namespace WebAddressbookTests
             AddNewContactPage();
             CreateContact(contact);
             manager.Buttons.ClickSubmitButton();
-            manager.Auth.Logout();
+            manager.Navigator.GoToHomePage();
             return this;
         }
 
@@ -27,7 +27,6 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomePage();
             Delete();
-            manager.Auth.Logout();
             return this;
         }
 
@@ -125,6 +124,23 @@ namespace WebAddressbookTests
                 return true;
             }
             return false;
+        }
+        public List<ContactData> GetContactsList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+
+            manager.Navigator.GoToHomePage();
+
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+            foreach (IWebElement element in elements)
+            {
+                string FirstName = element.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[2]/td[3]")).Text;
+                string LastName = element.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[2]/td[2]")).Text;
+ 
+                contacts.Add(new ContactData(FirstName, LastName));
+            }
+
+            return contacts;
         }
 
     }
