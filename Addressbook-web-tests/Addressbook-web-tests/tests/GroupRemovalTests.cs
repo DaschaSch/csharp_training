@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -18,9 +19,15 @@ namespace WebAddressbookTests
             newgroup.GroupHeader = "ddd";
             newgroup.GroupFooter = "ccc";
 
-            app.Groups.GroupCreationIfNotPresent(newgroup);
-            app.Groups.Remove(1);
 
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.GroupCreationIfNotPresent(newgroup);
+            app.Groups.Remove(0);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.RemoveAt(0);
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }

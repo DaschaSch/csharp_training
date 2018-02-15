@@ -18,7 +18,16 @@ namespace WebAddressbookTests
             newgroup.GroupFooter = "cc1";
 
             app.Groups.GroupCreationIfNotPresent(newgroup);
-            app.Groups.Modify(1);
+
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Modify(0, newgroup);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups[0].GroupName = newgroup.GroupName;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
 
         }
     }
