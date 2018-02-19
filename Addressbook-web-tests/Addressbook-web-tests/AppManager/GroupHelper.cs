@@ -20,6 +20,7 @@ namespace WebAddressbookTests
             SelectGroup(v);
             manager.Buttons.ClickDeleteButton();
             manager.Navigator.GoToGroupPage();
+            groupChache = null;
             return this;
 
         }
@@ -40,7 +41,7 @@ namespace WebAddressbookTests
 
             manager.Buttons.ClickNewButton();
             CreateNewGroup(newgroup);
-            manager.Buttons.ClickSubmitButton();
+            manager.Groups.ClickSubmitButton();
             return this;
         }
         public GroupHelper CreateNewGroup(GroupData newgroup)
@@ -61,7 +62,7 @@ namespace WebAddressbookTests
             {
                 manager.Buttons.ClickNewButton();
                 CreateNewGroup(newgroup);
-                manager.Buttons.ClickSubmitButton();
+                manager.Groups.ClickSubmitButton();
                 manager.Navigator.GoToGroupPage();
             }
             return this;
@@ -69,6 +70,12 @@ namespace WebAddressbookTests
         public GroupHelper ClickEditButton()
         {
             driver.FindElement(By.Name("edit")).Click();
+            return this;
+        }
+        public GroupHelper ClickSubmitButton()
+        {
+            driver.FindElement(By.Name("submit")).Click();
+            groupChache = null;
             return this;
         }
         public GroupHelper ClickUpdateButton()
@@ -85,19 +92,22 @@ namespace WebAddressbookTests
         {
             return IsElementPresent(By.Name("selected[]"));
         }
+        private List<GroupData> groupChache = null;
         public List<GroupData> GetGroupList()
         {
-            List<GroupData> groups = new List<GroupData>();
-
-            manager.Navigator.GoToGroupPage();
-
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
-            foreach(IWebElement element in elements)
+            if(groupChache == null)
             {
-               groups.Add(new GroupData(element.Text));
+                groupChache = new List<GroupData>();
+                manager.Navigator.GoToGroupPage();
+
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+                foreach (IWebElement element in elements)
+                {
+                    groupChache.Add(new GroupData(element.Text));
+                }
             }
 
-            return groups;
+            return new List<GroupData>(groupChache);
         }
     }
 }

@@ -12,10 +12,7 @@ namespace WebAddressbookTests
         public ButtonsHelper(ApplicationManager manager)
             : base(manager)
         { }
-        public void ClickSubmitButton()
-        {
-            driver.FindElement(By.Name("submit")).Click();
-        }
+
         public void ClickNewButton()
         {
             driver.FindElement(By.Name("new")).Click();

@@ -37,6 +37,7 @@ namespace WebAddressbookTests
             app.Contacts.CreateContactIfNotPresent(contact);
 
             List<ContactData> oldContact = app.Contacts.GetContactsList();
+            Console.Out.WriteLine(oldContact);
 
             app.Contacts.Remove();
 

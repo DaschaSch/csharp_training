@@ -40,7 +40,7 @@ namespace WebAddressbookTests
         {
             if (Object.ReferenceEquals(other, null))
             { return 1; }
-            return Firstname.CompareTo(other.Firstname) + Lastname.CompareTo(other.Lastname);
+            return (Firstname+Lastname).CompareTo(other.Firstname + other.Lastname);
         }
         public bool Equals(ContactData other)
         {
