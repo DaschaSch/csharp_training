@@ -37,7 +37,6 @@ namespace WebAddressbookTests
             EditContact(v);
             CreateContact(contact);
             manager.Contacts.ClickUpdateButton();
-            manager.Auth.Logout();
             return this;
         }
         public ContactHelper CreateContactIfNotPresent(ContactData contact)

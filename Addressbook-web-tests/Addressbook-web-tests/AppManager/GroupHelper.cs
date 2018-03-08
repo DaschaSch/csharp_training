@@ -32,9 +32,9 @@ namespace WebAddressbookTests
             ClickEditButton();
             CreateNewGroup(group);
             ClickUpdateButton();
+            manager.Navigator.GoToGroupPage();
             return this;
         }
-
         public GroupHelper Create(GroupData newgroup)
         {
             manager.Navigator.GoToGroupPage();
@@ -92,6 +92,7 @@ namespace WebAddressbookTests
         {
             return IsElementPresent(By.Name("selected[]"));
         }
+        //private field
         private List<GroupData> groupChache = null;
         public List<GroupData> GetGroupList()
         {
@@ -103,11 +104,17 @@ namespace WebAddressbookTests
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
                 foreach (IWebElement element in elements)
                 {
-                    groupChache.Add(new GroupData(element.Text));
+                    groupChache.Add(new GroupData(element.Text){
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
                 }
             }
 
             return new List<GroupData>(groupChache);
+        }
+        public int GetGroupCount()
+        {
+           return driver.FindElements(By.CssSelector("span.group")).Count;
         }
     }
 }
