@@ -12,6 +12,8 @@ namespace WebAddressbookTests
         {
             GroupName = gname;
         }
+        public GroupData()
+        { }
         public int CompareTo(GroupData other)
         {
             if(Object.ReferenceEquals(other, null))

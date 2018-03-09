@@ -42,6 +42,7 @@ namespace WebAddressbookTests
             manager.Buttons.ClickNewButton();
             CreateNewGroup(newgroup);
             manager.Groups.ClickSubmitButton();
+            manager.Navigator.GoToGroupPage();
             return this;
         }
         public GroupHelper CreateNewGroup(GroupData newgroup)
@@ -104,9 +105,23 @@ namespace WebAddressbookTests
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
                 foreach (IWebElement element in elements)
                 {
-                    groupChache.Add(new GroupData(element.Text){
+                    groupChache.Add(new GroupData(){
                         Id = element.FindElement(By.TagName("input")).GetAttribute("value")
                     });
+                }
+                string allGroupNames = driver.FindElement(By.CssSelector("div#content form")).Text;
+                string[] parts = allGroupNames.Split('\n');
+                int shift = groupChache.Count - parts.Length;
+                for (int i = 0; i < groupChache.Count; i++)
+                {
+                    if (i < shift)
+                    {
+                        groupChache[i].GroupName = "";
+                    }
+                    else
+                    {
+                        groupChache[i].GroupName = parts[i-shift].Trim();
+                    }                    
                 }
             }
 

@@ -27,6 +27,7 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomePage();
             Delete();
+            contactChache = null;
             return this;
         }
 
@@ -106,6 +107,7 @@ namespace WebAddressbookTests
         public ContactHelper ClickUpdateButton()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactChache = null;
             return this;
         }
         public void ClickSubmitButton()
@@ -129,24 +131,28 @@ namespace WebAddressbookTests
             }
             return false;
         }
-        private List<ContactData> contactChache = new List<ContactData>();
+        private List<ContactData> contactChache = null;
         public List<ContactData> GetContactsList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-
-            manager.Navigator.GoToHomePage();
-
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
-            foreach (IWebElement element in elements)
+            if (contactChache == null)
             {
-                string FirstName = element.FindElement(By.XPath("./td[3]")).Text;
-                string LastName = element.FindElement(By.XPath("./td[2]")).Text;
- 
-                contacts.Add(new ContactData(FirstName, LastName));
-            }
+                contactChache = new List<ContactData>();
 
-            return contacts;
-        }
+                manager.Navigator.GoToHomePage();
 
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+                foreach (IWebElement element in elements)
+                {
+                    string FirstName = element.FindElement(By.XPath("./td[3]")).Text;
+                    string LastName = element.FindElement(By.XPath("./td[2]")).Text;
+
+                    contactChache.Add(new ContactData(FirstName, LastName)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
+                }
+            }         
+         return new List<ContactData>(contactChache);
+        } 
     }
 }
