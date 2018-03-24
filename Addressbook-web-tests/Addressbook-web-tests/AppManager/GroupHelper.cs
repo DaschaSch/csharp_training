@@ -117,10 +117,12 @@ namespace WebAddressbookTests
                     if (i < shift)
                     {
                         groupChache[i].GroupName = "";
+                        Console.Out.WriteLine(i);
                     }
                     else
                     {
                         groupChache[i].GroupName = parts[i-shift].Trim();
+                        Console.Out.WriteLine("n" + i);
                     }                    
                 }
             }

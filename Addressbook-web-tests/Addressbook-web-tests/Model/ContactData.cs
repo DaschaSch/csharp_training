@@ -2,30 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-
-        private string middlename;
-
-        private string nickname;
-        private string title;
-        private string company;
-        private string address1;
-        private string homeTel1;
-        private string mobileTel;
-        private string workTel;
-        private string fax;
-        private string email1;
-        private string email2;
-        private string email3;
-        private string homepage;
-        private string address2;
-        private string homeTel2;
-        private string notes;
+        private string allPhones;
+        private string allEmails;
         public string Id { get; set; }
         public ContactData(string firstname)
         {
@@ -65,88 +50,58 @@ namespace WebAddressbookTests
         }
 
         public string Firstname{get;set;}
-
-        public string Middlename
-        {
-            get { return middlename; }
-            set { middlename = value; }
-        }
+        public string Middlename { get; set; }
         public string Lastname { get; set; }
-   
-        public string Nickname
-        {
-            get { return nickname; }
-            set { nickname = value; }
+        public string Nickname { get; set; }
+        public string Title { get; set; }
+        public string Company { get; set; }
+        public string Address1 { get; set; }
+        public string HomeTel1 { get; set; }
+        public string MobileTel { get; set; }
+        public string WorkTel { get; set; }
+        public string Fax { get; set; }
+        public string Email1 { get; set; }
+        public string Email2 { get; set; }
+        public string Email3 { get; set; }
+        public string Homepage { get; set; }    
+        public string Address2 { get; set; }
+        public string HomeTel2 { get; set; }
+        public string Notes { get; set; }
+        public string AllPhones {
+            get {
+                if(allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (Cleanup(HomeTel1) + Cleanup(MobileTel) + Cleanup(WorkTel)) + Cleanup(HomeTel2).Trim();
+                }
+             }
+            set { allPhones = value; }
         }
-        public string Title
+        public string AllEmails
         {
-            get { return title; }
-            set { title = value; }
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return Email1+ "\r\n" + Email2+ "\r\n" + Email3;
+                }
+            }
+            set { allEmails = value; }
         }
-        public string Company
+        private string Cleanup(string phone)
         {
-            get { return company; }
-            set { company = value; }
-        }
-        public string Address1
-        {
-            get { return address1; }
-            set { address1 = value; }
-        }
-        public string HomeTel1
-        {
-            get { return homeTel1; }
-            set { homeTel1 = value; }
-        }
-        public string MobileTel
-        {
-            get { return mobileTel; }
-            set { mobileTel = value; }
-        }
-        public string WorkTel
-        {
-            get { return workTel; }
-            set { workTel = value; }
-        }
-        public string Fax
-        {
-            get { return fax; }
-            set { fax = value; }
-        }
-        public string Email1
-        {
-            get { return email1; }
-            set { email1 = value; }
-        }
-        public string Email2
-        {
-            get { return email2; }
-            set { email2 = value; }
-        }
-        public string Email3
-        {
-            get { return email3; }
-            set { email3 = value; }
-        }
-        public string Homepage
-        {
-            get { return homepage; }
-            set { homepage = value; }
-        }
-        public string Address2
-        {
-            get { return address2; }
-            set { address2 = value; }
-        }
-        public string HomeTel2
-        {
-            get { return homeTel2; }
-            set { homeTel2 = value; }
-        }
-        public string Notes
-        {
-            get { return notes; }
-            set { notes = value; }
+            if(phone == null || phone == "")
+            {
+                return "";
+            }
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
         }
     }
-    }
+}
