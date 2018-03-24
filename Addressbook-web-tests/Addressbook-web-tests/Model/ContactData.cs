@@ -11,7 +11,10 @@ namespace WebAddressbookTests
     {
         private string allPhones;
         private string allEmails;
+        private string allData;
         public string Id { get; set; }
+        public ContactData()
+        { }
         public ContactData(string firstname)
         {
             Firstname = firstname;
@@ -90,11 +93,34 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return Email1+ "\r\n" + Email2+ "\r\n" + Email3;
+                    return Email1 + "\r\n" + Email2 + "\r\n" + Email3;
                 }
             }
             set { allEmails = value; }
         }
+
+        public string FeaturesData
+        { 
+            get
+            {
+                if (allData != null)
+                {
+                    return allData;
+                }
+                else
+                {
+                    return Firstname + " " + Middlename + " " + Lastname + "\r\n"
+      + Nickname + "\r\n" + Title + "\r\n" + Company + "\r\n"
+      + Address1 + "\r\n\r\n" + "H: " + HomeTel1 + "\r\n" + "M: " + MobileTel + "\r\n" + "W: "
+      + WorkTel + "\r\n" + "F: " + Fax + "\r\n\r\n" + AllEmails + "\r\n"
+      + "Homepage:" + "\r\n" + Homepage + "\r\n\r\n\r\n" + Address2 + "\r\n\r\n" + "P: " + HomeTel2 
+      + "\r\n\r\n" + Notes;
+
+                }
+            }
+            set { allData = value; }
+        }
+
         private string Cleanup(string phone)
         {
             if(phone == null || phone == "")
