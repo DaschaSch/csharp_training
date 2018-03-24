@@ -39,7 +39,7 @@ namespace WebAddressbookTests
         }
         public override string ToString()
         {
-            return "name " + GroupName;
+            return "name " + GroupName + "\nheader " + GroupHeader + "\nfooter " + GroupFooter;
         }
         public GroupData(string gname, string gheader, string gfooter)
         {
