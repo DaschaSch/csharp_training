@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebAddressbookTests;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace addressbookTestDataGenerators
 {
@@ -48,7 +49,7 @@ namespace addressbookTestDataGenerators
 
         static void writeGroupsToJsonFile(List<GroupData> groups, StreamWriter writer)
         {
-            throw new NotImplementedException();
+            ;
         }
 
         static void writeGroupsToCsvFile(List<GroupData> groups, StreamWriter writer)
@@ -63,7 +64,6 @@ namespace addressbookTestDataGenerators
         static void writeGroupsToXmlFile(List<GroupData> groups, StreamWriter writer)
         {
             new XmlSerializer(typeof(List<GroupData>)).Serialize(writer, groups);
-
         }
     }
 }
