@@ -49,7 +49,7 @@ namespace addressbookTestDataGenerators
 
         static void writeGroupsToJsonFile(List<GroupData> groups, StreamWriter writer)
         {
-            ;
+            writer.Write(JsonConvert.SerializeObject(groups, Newtonsoft.Json.Formatting.Indented));
         }
 
         static void writeGroupsToCsvFile(List<GroupData> groups, StreamWriter writer)
