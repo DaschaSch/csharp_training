@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 
@@ -24,7 +26,14 @@ namespace WebAddressbookTests
             }
             return groups;
         }
-        [Test, TestCaseSource("RandomGroupDataProvider")]
+
+        public static IEnumerable<GroupData> GroupDataFromJSONFile()
+        {
+            return JsonConvert.DeserializeObject<List<GroupData>>(
+                File.ReadAllText(@"group.json"));
+        }
+
+        [Test, TestCaseSource("GroupDataFromJSONFile")]
         public void GroupCreationTest(GroupData newgroup)
         {
 

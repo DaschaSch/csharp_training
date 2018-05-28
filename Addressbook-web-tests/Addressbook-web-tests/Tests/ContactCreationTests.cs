@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 
@@ -38,10 +40,15 @@ namespace WebAddressbookTests
                 });
             }
             return contact;
-
         }
 
-        [Test, TestCaseSource("RandomContactDataProvider")]
+        public static IEnumerable<ContactData> ContactDataFromJSONFile()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>(
+                File.ReadAllText(@"contact.json"));
+        }
+
+        [Test, TestCaseSource("ContactDataFromJSONFile")]
         public void ContactCreationTest(ContactData contact)
         {
             List<ContactData> oldContact = app.Contacts.GetContactsList(); 
