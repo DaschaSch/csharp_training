@@ -52,7 +52,7 @@ namespace WebAddressbookTests
             return "name " + Firstname + Lastname;
         }
 
-        public string Firstname{get;set;}
+        public string Firstname { get; set; }
         public string Middlename { get; set; }
         public string Lastname { get; set; }
         public string Nickname { get; set; }
