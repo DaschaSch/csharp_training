@@ -93,7 +93,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanUpEmail(Email1) + CleanUpEmail(Email2) + CleanUpEmail(Email3)).Trim();
+                    return (CleanupEmail(Email1) + CleanupEmail(Email2) + CleanupEmail(Email3)).Trim();
                 }
             }
             set { allEmails = value; }
