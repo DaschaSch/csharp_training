@@ -93,10 +93,22 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return Email1 + "\r\n" + Email2 + "\r\n" + Email3;
+                    return (CleanUpEmail(Email1) + CleanUpEmail(Email2) + CleanUpEmail(Email3)).Trim();
                 }
             }
             set { allEmails = value; }
+        }
+
+        private string CleanupEmail(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            else
+            {
+                return Regex.Replace(email, "[ -()]", "") + "\r\n";
+            }
         }
 
         public string FeaturesData
