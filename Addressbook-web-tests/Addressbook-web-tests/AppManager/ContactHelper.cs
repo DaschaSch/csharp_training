@@ -30,11 +30,31 @@ namespace WebAddressbookTests
             contactChache = null;
             return this;
         }
+
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(contact.Id);
+            RemoveContact();
+            DeleteOk();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
         internal ContactHelper Modify(int v, ContactData contact)
         {
             manager.Navigator.GoToHomePage();
             EditContact(v);
             CreateContact(contact);
+            manager.Contacts.ClickUpdateButton();
+            return this;
+        }
+
+        internal ContactHelper Modify(ContactData contact, ContactData newData)
+        {
+            manager.Navigator.GoToHomePage();
+            EditContact(contact.Id);
+            CreateContact(newData);
             manager.Contacts.ClickUpdateButton();
             return this;
         }
@@ -102,6 +122,13 @@ namespace WebAddressbookTests
                 .FindElement(By.TagName("a")).Click();
             return this;
         }
+
+        public ContactHelper EditContact(string contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
+            return this;
+        }
+
         public ContactHelper ClickUpdateButton()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -114,6 +141,24 @@ namespace WebAddressbookTests
             contactChache = null;
         }
 
+        public ContactHelper SelectContact(String contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
+            return this;
+        }
+        public ContactHelper RemoveContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            contactChache = null;
+            return this;
+        }
+
+        public ContactHelper DeleteOk()
+        {
+            driver.SwitchTo().Alert().Accept();
+            contactChache = null;
+            return this;
+        }
         private void Delete()
         {
             driver.FindElement(By.Name("selected[]")).Click();

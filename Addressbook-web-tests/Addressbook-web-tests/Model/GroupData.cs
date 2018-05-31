@@ -34,15 +34,18 @@ namespace WebAddressbookTests
             }
             return GroupName == other.GroupName;
         }
+
         //override - rewrite element set in base class
         public override int GetHashCode()
         {
             return GroupName.GetHashCode();
         }
+
         public override string ToString()
         {
             return "name " + GroupName + "\nheader " + GroupHeader + "\nfooter " + GroupFooter;
         }
+
         public GroupData(string gname, string gheader, string gfooter)
         {
             GroupName = gname;

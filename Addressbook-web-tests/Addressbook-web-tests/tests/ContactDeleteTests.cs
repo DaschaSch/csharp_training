@@ -9,42 +9,48 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactDeleteTests : AuthTestBase
+    public class ContactDeleteTests : ContactTestBase
     {
         
         [Test]
         public void ContactDeleteTest()
         {
-            ContactData contact = new ContactData("Danis");
-            contact.Address1 = "dfghjk";
-            contact.Address2 = "gs";
-            contact.Company = "adf";
-            contact.Email1 = "aaf@fs";
-            contact.Email2 = "gsdsg@fdsgf";
-            contact.Email3 = "sgfs@bfd";
-            contact.Fax = "123456";
-            contact.Homepage = "fghj.com";
-            contact.HomeTel1 = "7344";
-            contact.HomeTel2 = "34567";
-            contact.Lastname = "Schmidts";
-            contact.Middlename = "van";
-            contact.MobileTel = "547474676";
-            contact.Nickname = "dan";
-            contact.Notes = "lalala";
-            contact.Title = "Doc";
-            contact.WorkTel = "567483";
+            ContactData createContact = new ContactData("Danis");
+            createContact.Address1 = "dfghjk";
+            createContact.Address2 = "gs";
+            createContact.Company = "adf";
+            createContact.Email1 = "aaf@fs";
+            createContact.Email2 = "gsdsg@fdsgf";
+            createContact.Email3 = "sgfs@bfd";
+            createContact.Fax = "123456";
+            createContact.Homepage = "fghj.com";
+            createContact.HomeTel1 = "7344";
+            createContact.HomeTel2 = "34567";
+            createContact.Lastname = "Schmidts";
+            createContact.Middlename = "van";
+            createContact.MobileTel = "547474676";
+            createContact.Nickname = "dan";
+            createContact.Notes = "lalala";
+            createContact.Title = "Doc";
+            createContact.WorkTel = "567483";
 
-            app.Contacts.CreateContactIfNotPresent(contact);
+            app.Contacts.CreateContactIfNotPresent(createContact);
 
-            List<ContactData> oldContact = app.Contacts.GetContactsList();
-            Console.Out.WriteLine(oldContact);
+            List<ContactData> oldContact = ContactData.GetAll();
+            ContactData toRemove = oldContact[0];
 
-            app.Contacts.Remove();
+            app.Contacts.Remove(toRemove);
 
-            List<ContactData> newContact = app.Contacts.GetContactsList();
+            List<ContactData> newContact = ContactData.GetAll();
+
             oldContact.RemoveAt(0);
+
             Assert.AreEqual(oldContact, newContact);
 
+            foreach (ContactData contact in newContact)
+            {
+                Assert.AreNotEqual(contact.Id, toRemove.Id);
+            }
         }
      }
 }

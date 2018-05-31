@@ -14,6 +14,8 @@ namespace WebAddressbookTests
         private string allPhones;
         private string allEmails;
         private string allData;
+
+        [Column(Name = "id"), PrimaryKey, Identity]
         public string Id { get; set; }
         public ContactData()
         { }
@@ -166,6 +168,14 @@ namespace WebAddressbookTests
                 }
             }
             set { allData = value; }
+        }
+
+        public static List<ContactData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from g in db.Contacts select g).ToList();
+            }
         }
     }
 }
