@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -70,7 +71,20 @@ namespace WebAddressbookTests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
+        }
 
+        [Test]
+        public void TestDBConnectivity()
+        {
+            DateTime startUI = DateTime.Now;
+            List<GroupData> fromUI = app.Groups.GetGroupList();
+            DateTime endUI = DateTime.Now;
+            System.Console.WriteLine(endUI.Subtract(startUI));
+
+            DateTime startDB = DateTime.Now;
+            List<GroupData> fromDB = GroupData.GetAll();
+            DateTime endDB = DateTime.Now;
+            System.Console.WriteLine(endDB.Subtract(startDB));
         }
     }
 }

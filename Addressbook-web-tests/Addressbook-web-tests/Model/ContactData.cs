@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LinqToDB.Mapping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
+    [Table(Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
@@ -52,24 +54,44 @@ namespace WebAddressbookTests
             return "name " + Firstname + Lastname;
         }
 
+        [Column(Name = "firstname")]
         public string Firstname { get; set; }
+        [Column(Name = "middlename")]
         public string Middlename { get; set; }
+        [Column(Name = "lastname")]
         public string Lastname { get; set; }
+        [Column(Name = "nickname")]
         public string Nickname { get; set; }
+        [Column(Name = "title")]
         public string Title { get; set; }
+        [Column(Name = "company")]
         public string Company { get; set; }
+        [Column(Name = "address")]
         public string Address1 { get; set; }
+        [Column(Name = "home")]
         public string HomeTel1 { get; set; }
+        [Column(Name = "mobile")]
         public string MobileTel { get; set; }
+        [Column(Name = "work")]
         public string WorkTel { get; set; }
+        [Column(Name = "fax")]
         public string Fax { get; set; }
+        [Column(Name = "email")]
         public string Email1 { get; set; }
+        [Column(Name = "email2")]
         public string Email2 { get; set; }
+        [Column(Name = "email3")]
         public string Email3 { get; set; }
-        public string Homepage { get; set; }    
+        [Column(Name = "homepage")]
+        public string Homepage { get; set; }
+        [Column(Name = "address2")]
         public string Address2 { get; set; }
+        [Column(Name = "phone2")]
         public string HomeTel2 { get; set; }
+        [Column(Name = "notes")]
         public string Notes { get; set; }
+
+        #region AllPhones and Cleanup
         public string AllPhones {
             get {
                 if(allPhones != null)
@@ -83,6 +105,18 @@ namespace WebAddressbookTests
              }
             set { allPhones = value; }
         }
+
+        private string Cleanup(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+        }
+        #endregion
+
+        #region AllEmails and Cleanup
         public string AllEmails
         {
             get
@@ -110,6 +144,7 @@ namespace WebAddressbookTests
                 return Regex.Replace(email, "[ -()]", "") + "\r\n";
             }
         }
+        #endregion
 
         public string FeaturesData
         { 
@@ -131,15 +166,6 @@ namespace WebAddressbookTests
                 }
             }
             set { allData = value; }
-        }
-
-        private string Cleanup(string phone)
-        {
-            if(phone == null || phone == "")
-            {
-                return "";
-            }
-            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
         }
     }
 }
