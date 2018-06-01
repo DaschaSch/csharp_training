@@ -14,6 +14,18 @@ namespace WebAddressbookTests
         private string allPhones;
         private string allEmails;
         private string allData;
+        private string firstname;
+        private string middlename;
+        private string lastname;
+        private string nickname;
+        private string title;
+        private string company;
+        private string address1;
+        private string fax;
+        private string homepage;
+        private string address2;
+        private string notes;
+
 
         [Column(Name = "id"), PrimaryKey, Identity]
         public string Id { get; set; }
@@ -46,6 +58,7 @@ namespace WebAddressbookTests
             }
             return Firstname + Lastname == other.Firstname + other.Lastname;
         }
+
         //override - rewrite element set in base class
         public override int GetHashCode()
         {
@@ -57,19 +70,124 @@ namespace WebAddressbookTests
         }
 
         [Column(Name = "firstname")]
-        public string Firstname { get; set; }
+        public string Firstname
+        {
+            get
+            {
+                if (firstname != null)
+                {
+                    return firstname;
+                }
+                else
+                {
+                    return (Cleanup(Firstname).Trim());
+                }
+            }
+            set { firstname = value; }
+        }
+
         [Column(Name = "middlename")]
-        public string Middlename { get; set; }
+        public string Middlename
+        {
+            get
+            {
+                if (middlename != null)
+                {
+                    return middlename;
+                }
+                else
+                {
+                    return (Cleanup(Middlename).Trim());
+                }
+            }
+            set { middlename = value; }
+        }
+
         [Column(Name = "lastname")]
-        public string Lastname { get; set; }
+        public string Lastname
+        {
+            get
+            {
+                if (lastname != null)
+                {
+                    return lastname;
+                }
+                else
+                {
+                    return (Cleanup(Lastname).Trim());
+                }
+            }
+            set { lastname = value; }
+        }
+
         [Column(Name = "nickname")]
-        public string Nickname { get; set; }
+        public string Nickname
+        {
+            get
+            {
+                if (nickname != null)
+                {
+                    return nickname;
+                }
+                else
+                {
+                    return (Cleanup(Nickname).Trim());
+                }
+            }
+            set { nickname = value; }
+        }
+
         [Column(Name = "title")]
-        public string Title { get; set; }
+        public string Title
+        {
+            get
+            {
+                if (title != null)
+                {
+                    return title;
+                }
+                else
+                {
+                    return (Cleanup(Title).Trim());
+                }
+            }
+            set { title = value; }
+        }
+
         [Column(Name = "company")]
-        public string Company { get; set; }
+        public string Company
+        {
+            get
+            {
+                if (company != null)
+                {
+                    return company;
+                }
+                else
+                {
+                    return (Cleanup(Company).Trim());
+                }
+            }
+            set { company = value; }
+        }
+
         [Column(Name = "address")]
-        public string Address1 { get; set; }
+        public string Address1
+        {
+            get
+            {
+                if (address1 != null)
+                {
+                    return address1;
+                }
+                else
+                {
+                    return (Cleanup(Address1).Trim());
+                }
+            }
+            set { address1 = value; }
+        }
+
         [Column(Name = "home")]
         public string HomeTel1 { get; set; }
         [Column(Name = "mobile")]
@@ -77,25 +195,99 @@ namespace WebAddressbookTests
         [Column(Name = "work")]
         public string WorkTel { get; set; }
         [Column(Name = "fax")]
-        public string Fax { get; set; }
+        public string Fax
+        {
+            get
+            {
+                if (fax != null)
+                {
+                    return fax;
+                }
+                else
+                {
+                    return (Cleanup(Fax).Trim());
+                }
+            }
+            set { fax = value; }
+        }
+
         [Column(Name = "email")]
         public string Email1 { get; set; }
         [Column(Name = "email2")]
         public string Email2 { get; set; }
         [Column(Name = "email3")]
         public string Email3 { get; set; }
+
         [Column(Name = "deprecated")]
         public string Deprecated { get; set; }
+
         [Column(Name = "homepage")]
-        public string Homepage { get; set; }
+        public string Homepage
+        {
+            get
+            {
+                if (homepage != null)
+                {
+                    return homepage;
+                }
+                else
+                {
+                    return (Cleanup(Homepage).Trim());
+                }
+            }
+            set { homepage = value; }
+        }
+
         [Column(Name = "address2")]
-        public string Address2 { get; set; }
+        public string Address2
+        {
+            get
+            {
+                if (address2 != null)
+                {
+                    return address2;
+                }
+                else
+                {
+                    return (Cleanup(Address2).Trim());
+                }
+            }
+            set { address2 = value; }
+        }
+
         [Column(Name = "phone2")]
         public string HomeTel2 { get; set; }
-        [Column(Name = "notes")]
-        public string Notes { get; set; }
 
-        #region AllPhones and Cleanup
+        [Column(Name = "notes")]
+        public string Notes
+        {
+            get
+            {
+                if (notes != null)
+                {
+                    return notes;
+                }
+                else
+                {
+                    return (Cleanup(Notes).Trim());
+                }
+            }
+            set { notes = value; }
+        }
+
+        private string Cleanup(string element)
+        {
+            if (element == null || element == "")
+            {
+                return "";
+            }
+            else
+            {
+                return Regex.Replace(element, "[ -()]", "") + "\r\n";
+            }
+        }
+
+        #region AllPhones
         public string AllPhones {
             get {
                 if(allPhones != null)
@@ -110,17 +302,9 @@ namespace WebAddressbookTests
             set { allPhones = value; }
         }
 
-        private string Cleanup(string phone)
-        {
-            if (phone == null || phone == "")
-            {
-                return "";
-            }
-            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
-        }
         #endregion
 
-        #region AllEmails and Cleanup
+        #region AllEmails
         public string AllEmails
         {
             get
@@ -131,23 +315,12 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanupEmail(Email1) + CleanupEmail(Email2) + CleanupEmail(Email3)).Trim();
+                    return (Cleanup(Email1) + Cleanup(Email2) + Cleanup(Email3)).Trim();
                 }
             }
             set { allEmails = value; }
         }
 
-        private string CleanupEmail(string email)
-        {
-            if (email == null || email == "")
-            {
-                return "";
-            }
-            else
-            {
-                return Regex.Replace(email, "[ -()]", "") + "\r\n";
-            }
-        }
         #endregion
 
         public string FeaturesData
